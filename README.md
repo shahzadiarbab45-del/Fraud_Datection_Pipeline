@@ -1,7 +1,6 @@
 # 💳 Credit Card Fraud Detection — Imbalanced Classification Pipeline
 
 A production-style machine learning pipeline for detecting fraudulent credit card transactions in a severely imbalanced dataset (284,807 transactions, 0.17% fraud), built with a strict zero-data-leakage architecture using `imblearn.pipeline.Pipeline`, SMOTE, and GridSearchCV.
-vvvvv
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.8-orange)
@@ -37,6 +36,10 @@ This project is built around solving that problem correctly:
 
 This single comparison is the reason the entire pipeline is architected the way it is.
 
+<p align="center">
+  <img src="01_class_distribution.png" width="700">
+</p>
+
 ---
 
 ## 🏗️ Pipeline Architecture
@@ -66,6 +69,10 @@ Evaluation on untouched test set
 
 **Why `imblearn.pipeline.Pipeline` instead of `sklearn.pipeline.Pipeline`?**
 Standard scikit-learn pipeline steps expect a `transform()` method that only modifies the feature matrix `X`. SMOTE needs to modify both `X` and `y` simultaneously (it generates new minority-class rows), which scikit-learn's pipeline silently breaks or rejects. `imblearn`'s pipeline natively supports this via `fit_resample()`, and — critically — only applies it to the training portion of each cross-validation fold, never to validation or test data.
+
+<p align="center">
+  <img src="05_confusion_matrices.png" width="800">
+</p>
 
 ---
 
@@ -104,6 +111,14 @@ Standard scikit-learn pipeline steps expect a `transform()` method that only mod
 
 ## 📊 Results Summary
 
+<p align="center">
+  <img src="06_roc_curves.png" width="800">
+</p>
+
+<p align="center">
+  <img src="09_model_comparison.png" width="800">
+</p>
+
 | Model | Precision | Recall | F1 Score | ROC-AUC |
 |---|---|---|---|---|
 | Logistic Regression — Baseline | — | — | — | — |
@@ -126,17 +141,16 @@ Standard scikit-learn pipeline steps expect a `transform()` method that only mod
 ├── fraud_detection_pipeline.ipynb   # Main notebook — full pipeline end to end
 ├── creditcard.csv                   # Dataset (not included — see Setup)
 ├── README.md                        # This file
-└── outputs/
-    ├── 01_class_distribution.png
-    ├── 02_amount_time_distribution.png
-    ├── 03_correlation_heatmap.png
-    ├── 04_discriminative_features.png
-    ├── 05_confusion_matrices.png
-    ├── 06_roc_curves.png
-    ├── 07_precision_recall_curves.png
-    ├── 08_feature_importance.png
-    ├── 09_model_comparison.png
-    └── 10_threshold_analysis.png
+├── 01_class_distribution.png
+├── 02_amount_time_distribution.png
+├── 03_correlation_heatmap.png
+├── 04_discriminative_features.png
+├── 05_confusion_matrices.png
+├── 06_roc_curves.png
+├── 07_precision_recall_curves.png
+├── 08_feature_importance.png
+├── 09_model_comparison.png
+└── 10_threshold_analysis.png
 ```
 
 ---
